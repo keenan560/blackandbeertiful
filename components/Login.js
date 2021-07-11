@@ -10,12 +10,13 @@ function Login({ navigation }) {
           style={{
             textAlign: "center",
             color: "#fff",
-            fontSize: 72,
-            fontStyle: "italic",
+            fontSize: 50,
+            // fontStyle: "italic",
             fontWeight: "bold",
+            marginBottom: 10,
           }}
         >
-          Belp!
+          One Pour All
         </Text>
         <Input
           inputStyle={styles.input}
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#B266B2",
+    backgroundColor: "#7AA998",
     justifyContent: "center",
   },
   input: {
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
     width: 200,
     color: "#fff",
     borderColor: "#fff",
+    marginTop: 20,
   },
   button: {
     backgroundColor: "#fff",
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   buttonText: {
-    color: "#B266B2",
+    color: "#7AA998",
     fontWeight: "bold",
     fontSize: 25,
     textAlign: "center",

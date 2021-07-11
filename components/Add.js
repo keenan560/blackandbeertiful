@@ -2,6 +2,8 @@ import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
+// First thing to see is the Add page
+
 function Add() {
   return (
     <View style={styles.container}>
@@ -9,20 +11,30 @@ function Add() {
         <TouchableOpacity style={{ alignItems: "center" }}>
           <FontAwesome
             name="star-half-o"
-            size={100}
-            color="#fff"
-            style={{ margin: 10 }}
+            size={92}
+            color="#7AA998"
+            style={{ margin: 5 }}
           />
           <Text style={styles.text}>Post a review</Text>
         </TouchableOpacity>
         <TouchableOpacity style={{ alignItems: "center" }}>
           <FontAwesome
             name="exclamation-circle"
-            size={100}
-            color="#fff"
-            style={{ margin: 10 }}
+            size={92}
+            color="#7AA998"
+            style={{ margin: 5 }}
           />
           <Text style={styles.text}>Escalate an issue</Text>
+        </TouchableOpacity>
+        {/* Resource page has helpful links like counseling or report groups/legal/BBB */}
+        <TouchableOpacity style={{ alignItems: "center" }}>
+          <FontAwesome
+            name="group"
+            size={92}
+            color="#7AA998"
+            style={{ margin: 5 }}
+          />
+          <Text style={styles.text}>Resources</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -33,11 +45,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#B266B2",
+    backgroundColor: "#fff",
     justifyContent: "center",
   },
   text: {
-    color: "#fff",
+    color: "#7AA998",
     fontWeight: "bold",
     fontSize: 25,
     marginBottom: 85,

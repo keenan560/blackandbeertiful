@@ -8,15 +8,22 @@ function Home({ navigation }) {
       <Text
         style={{
           textAlign: "center",
-          fontSize: 72,
-          fontStyle: "italic",
+          fontSize: "60vh",
+          // fontStyle: "italic",
           fontWeight: "bold",
         }}
       >
-        Belp!
+        One Pour All
       </Text>
-      <Text style={{ color: "#B266B2", fontWeight: "bold" }}>
-        Let your voice be heard
+      <Text
+        style={{
+          color: "#7AA998",
+          fontWeight: "bold",
+          fontSize: 18,
+          marginBottom: 5,
+        }}
+      >
+        Tagline
       </Text>
       <TouchableOpacity
         style={styles.button}
@@ -30,8 +37,8 @@ function Home({ navigation }) {
       >
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <Text style={{ fontSize: 9, fontWeight: "bold" }}>
-        Created by #BlackandBeertiful copyright 2021
+      <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+        Created by #BlackandBeertiful
       </Text>
     </View>
   );
@@ -45,12 +52,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   button: {
-    backgroundColor: "#B266B2",
+    backgroundColor: "#7AA998",
     height: 65,
     width: 300,
     margin: 5,
     borderRadius: 15,
     justifyContent: "center",
+    marginBottom: 10,
   },
   buttonText: {
     color: "#fff",

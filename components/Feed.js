@@ -55,7 +55,10 @@ function Feed() {
                   leftIcon={{ type: "font-awesome", name: "comment-o" }}
                 />
 
-                <Button title="Post" />
+                <Button
+                  title="Post"
+                  buttonStyle={{ backgroundColor: "#7AA998" }}
+                />
               </Card>
             </View>
           );

@@ -33,7 +33,7 @@ export default function App() {
         <Stack.Screen
           name="Dashboard"
           component={Dashboard}
-          options={{ title: "Dashboard" }}
+          options={{ title: "One Pour All" }}
         />
         <Stack.Screen
           name="Chat"

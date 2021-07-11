@@ -29,52 +29,7 @@ function Chat({ navigation, name }) {
           timeStamp: "10:35am",
         },
         {
-          message:
-            "Me too! The rates are good. How is your experiencing so far using the app?",
-          from: "receiver",
-          timeStamp: "10:33am",
-        },
-        {
-          message: "I'm good glad to be using this app!",
-          from: "sender",
-          timeStamp: "10:35am",
-        },
-        {
-          message:
-            "Me too! The rates are good. How is your experiencing so far using the app?",
-          from: "receiver",
-          timeStamp: "10:33am",
-        },
-        {
-          message: "I'm good glad to be using this app!",
-          from: "sender",
-          timeStamp: "10:35am",
-        },
-        {
-          message:
-            "Me too! The rates are good. How is your experiencing so far using the app?",
-          from: "receiver",
-          timeStamp: "10:33am",
-        },
-        {
-          message: "I'm good glad to be using this app!",
-          from: "sender",
-          timeStamp: "10:35am",
-        },
-        {
-          message:
-            "Me too! The rates are good. How is your experiencing so far using the app?",
-          from: "receiver",
-          timeStamp: "10:33am",
-        },
-        {
-          message: "I'm good glad to be using this app!",
-          from: "sender",
-          timeStamp: "10:35am",
-        },
-        {
-          message:
-            "Me too! The rates are good. How is your experiencing so far using the app?",
+          message: "Me too! How is your experiencing so far using the app?",
           from: "receiver",
           timeStamp: "10:33am",
         },
@@ -205,7 +160,7 @@ const styles = StyleSheet.create({
   },
   senderBackground: {
     borderRadius: 20,
-    backgroundColor: "#4CA64C",
+    backgroundColor: "#7AA998",
     maxWidth: "50%",
   },
   receiverBackground: {

@@ -21,26 +21,28 @@ function Dashboard({ navigation }) {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
-            iconName = focused ? "home" : "home-outline";
-            color = "#B266B2";
+          if (route.name === "Dashboard") {
+            iconName = focused
+              ? "md-information-circle"
+              : "md-information-circle-outline";
+            color = "#7AA998";
           }
           if (route.name === "Feed") {
             iconName = focused ? "list-circle" : "list-outline";
-            color = "#B266B2";
+            color = "#7AA998";
           }
 
           if (route.name === "Add") {
             iconName = focused ? "add-circle" : "add";
-            color = "#B266B2";
+            color = "#7AA998";
           }
-          if (route.name === "Chat") {
+          if (route.name === "Support") {
             iconName = focused ? "chatbox" : "chatbox-outline";
-            color = "#B266B2";
+            color = "#7AA998";
           }
           if (route.name === "Settings") {
             iconName = focused ? "settings" : "settings-outline";
-            color = "#B266B2";
+            color = "#7AA998";
           }
           // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -51,10 +53,12 @@ function Dashboard({ navigation }) {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen name="Home" component={HomeTab} />
-      <Tab.Screen name="Feed" component={FeedTab} />
       <Tab.Screen name="Add" component={AddTab} />
-      <Tab.Screen name="Chat" component={ChatTab} />
+      <Tab.Screen name="Dashboard" component={HomeTab} />
+      <Tab.Screen name="Feed" component={FeedTab} />
+
+      {/* Chat support not between users */}
+      <Tab.Screen name="Support" component={ChatTab} />
       <Tab.Screen name="Settings" component={SettingsTab} />
     </Tab.Navigator>
   );
