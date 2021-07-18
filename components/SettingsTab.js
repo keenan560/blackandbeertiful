@@ -1,6 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import { View } from "react-native";
+import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
 
 function SettingsTab({ navigation }) {
   return (

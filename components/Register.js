@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import {
   Text,
   StyleSheet,
   View,
   ScrollView,
+  TextInput,
   TouchableOpacity,
+  Button,
   Alert,
 } from "react-native";
 import { Input, CheckBox } from "react-native-elements";
@@ -31,79 +34,157 @@ if (!firebase.apps.length) {
 
 function Register({ navigation }) {
   const [checked, setChecked] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
 
   const toggleCheck = () => {
     setChecked(!checked);
   };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
-  const signUp = () => {
-    if (!checked) {
-      alert("Please check the box!");
-    }
-    if (password1 !== password2) {
-      alert("Passwords must match!");
-    }
+  const onSubmit = (data, event) => {
+    event.preventDefault();
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then((authUser) => {
+        authUser.user.updateProfile({
+          email: authUser.user.email,
+          firstName: authUser.user.firstName,
+          lastName: authUser.user.lastName,
+        });
+        console.log(authUser);
 
-    if (!password1 || !password2) {
-      alert("Please enter a password!");
-    }
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(`${authUser.user.uid}`)
+          .set({
+            id: authUser.user.uid,
+            email: authUser.user.email,
+            firstName: data.firstName,
+            lastName: data.lastName,
+          })
+          .catch((error) => alert(error.message));
+        alert("Please login " + data.firstName);
+        navigation.navigate("Login");
+      })
+      .catch((error) => alert(error.message));
 
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword1("");
-    setPassword2("");
-    setChecked(false);
+    reset({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    });
   };
-
   return (
     <View style={styles.container}>
       <Text style={{ margin: 10, fontSize: 25 }}>
         Fill in the details below.
       </Text>
       <ScrollView style={{ width: 300 }}>
-        <Input
-          inputStyle={styles.input}
-          value={firstName}
-          onChangeText={(text) => setFirstName(text)}
-          placeholder="First Name"
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder={"First Name"}
+            />
+          )}
+          name="firstName"
+          defaultValue=""
         />
-        <Input
-          inputStyle={styles.input}
-          value={lastName}
-          onChangeText={(text) => setLastName(text)}
-          placeholder="Last Name"
+        {errors.firstName && (
+          <Text style={styles.error}>This is required.</Text>
+        )}
+
+        <Controller
+          control={control}
+          rules={{
+            maxLength: 100,
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder={"Last Name"}
+            />
+          )}
+          name="lastName"
+          defaultValue=""
         />
-        <Input
-          inputStyle={styles.input}
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          placeholder="Email"
+        {errors.lastName && <Text style={styles.error}>This is required.</Text>}
+        <Controller
+          control={control}
+          rules={{
+            maxLength: 100,
+            required: true,
+            pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder={"Email"}
+            />
+          )}
+          name="email"
+          defaultValue=""
         />
-        <Input
-          inputStyle={styles.input}
-          value={password1}
-          onChangeText={(text) => setPassword1(text)}
-          placeholder="Password"
+        {errors.email && (
+          <Text style={styles.error}>Please enter a valid email address.</Text>
+        )}
+        <Controller
+          control={control}
+          rules={{
+            maxLength: 100,
+            required: true,
+            minLength: 6,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder={"Password"}
+              secureTextEntry
+            />
+          )}
+          name="password"
+          defaultValue=""
         />
-        <Input
-          inputStyle={styles.input}
-          value={password2}
-          onChangeText={(text) => setPassword2(text)}
-          placeholder="Re-enter Password"
-        />
+        {errors.password && (
+          <Text style={styles.error}>Minimum of six characters.</Text>
+        )}
+
         <CheckBox
           title="Click here to agree to the Terms & Conditions"
           checked={checked}
           onPress={toggleCheck}
-          textStyle={{ fontSize: 10 }}
+          textStyle={{ fontSize: 12, marginTop: 10 }}
         />
-        <TouchableOpacity style={styles.button} onPress={signUp}>
+        {!checked && <Text style={styles.error}>Please check the box.</Text>}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit(onSubmit)}
+          type="button"
+        >
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -126,6 +207,7 @@ const styles = StyleSheet.create({
     width: 300,
     marginBottom: 50,
     borderRadius: 15,
+    marginTop: 50,
   },
   buttonText: {
     color: "#fff",
@@ -138,6 +220,14 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 65,
-    width: 200,
+    width: "100%",
+    fontSize: 18,
+    marginBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
+  },
+  error: {
+    color: "#FF3366",
+    fontSize: 14,
   },
 });
