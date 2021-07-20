@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { UserContext } from "../App";
 
 // First thing to see is the Add page
 
-function Add() {
+function Add({ navigation }) {
+  const userContext = useContext(UserContext);
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "column", alignItems: "center" }}>
-        <TouchableOpacity style={{ alignItems: "center" }}>
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          onPress={() =>
+            navigation.navigate("Post a Review", { name: "Post Review" })
+          }
+        >
           <FontAwesome
             name="star-half-o"
             size={92}

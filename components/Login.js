@@ -1,8 +1,59 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Input } from "react-native-elements";
+import { Input, Button } from "react-native-elements";
+import { UserContext } from "../App";
+import * as firebase from "firebase";
+import "firebase/auth";
+//import "firebase/database";
+import "firebase/firestore";
+//import "firebase/functions";
+//import "firebase/storage";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBg4rB-q8is-I7HsK3egLVdjnytC_kkkdY",
+  authDomain: "blackandbeertiful-555ab.firebaseapp.com",
+  projectId: "blackandbeertiful-555ab",
+  storageBucket: "blackandbeertiful-555ab.appspot.com",
+  messagingSenderId: "891232814969",
+  appId: "1:891232814969:web:d799becfc13cdb9e9c91a8",
+  measurementId: "G-BEGKZNKN4Q",
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 function Login({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const userContext = useContext(UserContext);
+  console.log(userContext.userState);
+  const logIn = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        // Signed in
+        // ...
+
+        userContext.userDispatch({
+          type: "login",
+          payload: { user: user, isLogged: true },
+        });
+
+        setTimeout(() => {
+          setLoading(false);
+          navigation.navigate("Dashboard", { name: "Dashboard" });
+        }, 1000);
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+        setLoading(false);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ width: 300 }}>
@@ -25,6 +76,7 @@ function Login({ navigation }) {
           textContentType="emailAddress"
           inputContainerStyle={{ borderColor: "#fff" }}
           placeholderTextColor="#fff"
+          onChangeText={(text) => setEmail(text)}
         />
         <Input
           inputStyle={styles.input}
@@ -32,15 +84,19 @@ function Login({ navigation }) {
           textContentType="password"
           inputContainerStyle={{ borderColor: "#fff" }}
           placeholderTextColor="#fff"
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry
         />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            navigation.navigate("Dashboard", { name: "Dashboard" })
-          }
-        >
+        <TouchableOpacity style={styles.button} onPress={logIn}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+        {/* <Button
+          buttonStyle={styles.button}
+          title="Login"
+          type="solid"
+          onPress={logIn}
+          loading={loading}
+        /> */}
       </View>
     </View>
   );
